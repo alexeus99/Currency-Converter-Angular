@@ -4,11 +4,11 @@
   <div class="currencies-value-container">
     <div class="currency-block">
       <p style="text-align: center">USD/UAH:</p>
-      <div class="usd-status">{{ uahRation.data["USD"].value * 1000 }}</div>
+      <div class="usd-status">{{ uahRation.data["USD"].value * 1000 | number: '2.1-2' }}</div>
     </div>
     <div class="currency-block">
       <p style="text-align: center">EUR/UAH:</p>
-      <div class="usd-status">{{ uahRation.data["EUR"].value * 1000 }}</div>
+      <div class="usd-status">{{ uahRation.data["EUR"].value * 1000 | number: '2.1-2' }}</div>
     </div>
   </div>
   <form [formGroup]="form">

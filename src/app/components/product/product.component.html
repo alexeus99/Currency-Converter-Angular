@@ -14,12 +14,13 @@
   <form [formGroup]="form">
     <div class="exchange-container">
       <div class="exchange-currency-container">
-        <p style="">I give:</p>
+        <label class="label"> I give: </label>
         <select formControlName="fromCurrency" class="currency-selector">
           <option *ngFor="let option of options" [value]="option.value">
             {{ option.title }}
           </option>
         </select>
+        
         <input
           class="currency-value-input"
           id="give-currency"
@@ -30,7 +31,7 @@
         />
       </div>
       <div class="exchange-currency-container">
-        <p>I get:</p>
+        <label class="label"> I get: </label>
         <select formControlName="toCurrency" class="currency-selector">
           <option *ngFor="let option of options" [value]="option.value">
             {{ option.title }}

@@ -1,0 +1,51 @@
+<p class="loading" *ngIf="loading">Loading...</p>
+<div *ngIf="!loading" class="main-container">
+  <h1 class="name-plate">Currency Converter</h1>
+  <div class="currencies-value-container">
+    <div class="currency-block">
+      <p style="text-align: center">USD/UAH:</p>
+      <div class="usd-status">{{ uahRation.data["USD"].value * 1000 }}</div>
+    </div>
+    <div class="currency-block">
+      <p style="text-align: center">EUR/UAH:</p>
+      <div class="usd-status">{{ uahRation.data["EUR"].value * 1000 }}</div>
+    </div>
+  </div>
+  <form [formGroup]="form">
+    <div class="exchange-container">
+      <div class="exchange-currency-container">
+        <p style="">I give:</p>
+        <select formControlName="fromCurrency" class="currency-selector">
+          <option *ngFor="let option of options" [value]="option.value">
+            {{ option.title }}
+          </option>
+        </select>
+        <input
+          class="currency-value-input"
+          id="give-currency"
+          type="number"
+          formControlName="fromValue"
+          placeholder="Enter amount"
+          (input)="updateFromValue()"
+        />
+      </div>
+      <div class="exchange-currency-container">
+        <p>I get:</p>
+        <select formControlName="toCurrency" class="currency-selector">
+          <option *ngFor="let option of options" [value]="option.value">
+            {{ option.title }}
+          </option>
+        </select>
+
+        <input
+          class="currency-value-input"
+          id="get-currency"
+          type="number"
+          formControlName="toValue"
+          placeholder="Enter amount"
+          (input)="updateToValue()"
+        />
+      </div>
+    </div>
+  </form>
+</div>

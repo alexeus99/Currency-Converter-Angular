@@ -15,7 +15,7 @@ enum Currency {
   styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit {
-  loading = false;
+  loading: boolean = false;
 
   options: Array<{ title: string; value: string }> = [
     { title: 'USD', value: Currency.USD },
@@ -26,8 +26,6 @@ export class ProductComponent implements OnInit {
   currency: { data: { [key: string]: ICurrency } };
   uahRation: { data: { [key: string]: ICurrency } };
 
-  constructor(public ConfigService: ConfigService) {}
-
   form = new FormGroup({
     fromValue: new FormControl(),
     toValue: new FormControl(),
@@ -35,13 +33,26 @@ export class ProductComponent implements OnInit {
     toCurrency: new FormControl(Currency.UAH),
   });
 
+  constructor(
+    public ConfigService: ConfigService
+    ) {}
+
+
   ngOnInit() {
     this.loading = true;
     this.getUahRatio();
 
+
+    
+
+
+    this.ConfigService.getCurrencies(Currency.USD).subscribe((result) => {
+      this.currency = result;
+    });
+
     this.form.controls.fromCurrency.valueChanges.subscribe((value) => {
       if (value) {
-        this.getCurrencies(value).then((result) => {
+        this.ConfigService.getCurrencies(value).subscribe((result) => {
           if (value) {
             this.currency = result;
             const fromValue = Number(this.form.controls.fromValue.value);
@@ -62,12 +73,10 @@ export class ProductComponent implements OnInit {
       );
     });
 
-    this.getCurrencies(Currency.USD).then((result) => {
-      this.currency = result;
-    });
+    
   }
 
-  updateToValue() {
+  updateToValue(): void {
     const currency = this.form.controls.toCurrency.value;
     const toValue = this.form.controls.toValue.value;
     if (currency) {
@@ -77,7 +86,7 @@ export class ProductComponent implements OnInit {
     }
   }
 
-  updateFromValue() {
+  updateFromValue():void  {
     const currency = this.form.controls.toCurrency.value;
     const fromValue = this.form.controls.fromValue.value;
     if (currency) {
@@ -85,14 +94,6 @@ export class ProductComponent implements OnInit {
         (fromValue * this.currency.data[currency].value).toFixed(2)
       );
     }
-  }
-
-  private getCurrencies(currency: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.ConfigService.getCurrencies(currency).subscribe((data) => {
-        resolve(data);
-      });
-    });
   }
 
   private getUahRatio() {

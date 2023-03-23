@@ -21,35 +21,19 @@
         <label class="label"> I give: </label>
         <select formControlName="fromCurrency" class="currency-selector">
           <option *ngFor="let option of options" [value]="option.value">
-            {{ option.title }}
+            {{ option.value }}
           </option>
         </select>
-
-        <input
-          class="currency-value-input"
-          id="give-currency"
-          type="number"
-          formControlName="fromValue"
-          placeholder="Enter amount"
-          (input)="updateFromValue()"
-        />
+        <input class="currency-value-input" type="number" formControlName="fromValue" placeholder="Enter amount" />
       </div>
       <div class="exchange-currency-container">
         <label class="label"> I get: </label>
         <select formControlName="toCurrency" class="currency-selector">
           <option *ngFor="let option of options" [value]="option.value">
-            {{ option.title }}
+            {{ option.value }}
           </option>
         </select>
-
-        <input
-          class="currency-value-input"
-          id="get-currency"
-          type="number"
-          formControlName="toValue"
-          placeholder="Enter amount"
-          (input)="updateToValue()"
-        />
+        <input class="currency-value-input" type="number" formControlName="toValue" placeholder="Enter amount" />
       </div>
     </div>
   </form>

@@ -1,24 +1,20 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ICurrency } from '../models/currency';
-import {  Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+
+import { ICurrencyData } from 'src/app/models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ConfigService {
-  constructor(private http: HttpClient) {}
+  private readonly _key = 'WAvLWG0yNxXV9xv5eLS6H3PLXCOKoRfTXuQh5T0b';
 
-  currencies: ICurrency[] = [];
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  getCurrencies(base_currency: string): Observable<{
-    data: { USD: ICurrency; EUR: ICurrency; UAH: ICurrency };
-  }> {
-    return this.http.get<{
-      data: { USD: ICurrency; EUR: ICurrency; UAH: ICurrency };
-    }>(
-      `https://api.currencyapi.com/v3/latest?apikey=WAvLWG0yNxXV9xv5eLS6H3PLXCOKoRfTXuQh5T0b&currencies=EUR%2CUSD%2CUAH&base_currency=${base_currency}`
-      
-    );
+  public getCurrencies(base_currency: string): Observable<ICurrencyData> {
+    return this.http.get<ICurrencyData>(`https://api.currencyapi.com/v3/latest?apikey=${this._key}&currencies=EUR%2CUSD%2CUAH&base_currency=${base_currency}`);
   }
 }
